@@ -9,8 +9,7 @@ https://github.com/Ayushman-Misraa/VerifEye-Extension
 
 ## 🌐 Demo Webpage
 
-👉 **Live Demo Webpage:**  
-[https://verifeye-demo.vercel.app](https://verifeye-demo.vercel.app) *(Replace with your actual link)*
+
 
 📌 **Note:** This is a **visual demo page** for showcasing VerifEye’s behavior on different types of websites.  
 It is **not linked** to the actual extension — all real security scanning happens only inside the browser extension.
