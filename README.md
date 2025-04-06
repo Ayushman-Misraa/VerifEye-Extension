@@ -1,6 +1,8 @@
 # VerifEye Extension
 
 A browser extension that automatically scans webpages for security risks and displays a risk level indicator with four levels: Low, Medium, High, and Critical. The extension shows detailed alerts if any malicious patterns, phishing attempts, or disinformation keywords are detected.
+ 
+Guide Link :-https://drive.google.com/drive/folders/1tfKFy8Yl4gLdjtd_ITrYP-B_gJlcy-Dn?usp=sharing
 
 ## Features
 
