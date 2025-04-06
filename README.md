@@ -155,6 +155,4 @@ This extension:
 - Does not require any login or account creation
 - Does not track your browsing history
 
-## License
 
-[MIT License](LICENSE)
