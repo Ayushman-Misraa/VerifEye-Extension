@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURITY BREACH DETECTED!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #000;
+            color: #ff0000;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 0.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Page entrance effect */
+        .page-entrance {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #ff0000;
+            z-index: 9999;
+            animation: entranceAnimation 1.5s ease-in-out forwards;
+        }
+
+        @keyframes entranceAnimation {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100%); }
+        }
+
+        .danger-container {
+            text-align: center;
+            padding: 2rem;
+            border: 4px solid #ff0000;
+            background-color: rgba(0, 0, 0, 0.8);
+            max-width: 800px;
+            position: relative;
+            z-index: 10;
+            transform: scale(0.9);
+            animation: scaleIn 0.5s ease-in-out 1s forwards;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.9); }
+            to { transform: scale(1); }
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            font-weight: 900;
+            letter-spacing: 2px;
+            animation: flashing 0.5s infinite;
+            text-shadow: 0 0 10px #ff0000;
+        }
+        
+        .warning-text {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            animation: shake 0.5s infinite;
+        }
+        
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .hacker-icon {
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            animation: rotate 3s infinite linear;
+            display: inline-block;
+        }
+        
+        .warning-symbols {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 3rem;
+        }
+        
+        .counter {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            color: #fff;
+            background-color: #ff0000;
+            padding: 10px;
+            border-radius: 5px;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes flashing {
+            0% { opacity: 1; }
+            49% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 0; }
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            50% { transform: translateX(0); }
+            75% { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .alarm {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 0, 0, 0.1);
+            z-index: 1;
+            animation: alarm-flash 1s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes alarm-flash {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #333;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background-color: #ff0000;
+            width: 0%;
+            animation: progress 30s linear forwards;
+        }
+        
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Page entrance animation -->
+    <div class="page-entrance"></div>
+
+    <div class="alarm"></div>
+    <canvas id="matrix" class="matrix-bg"></canvas>
+    <div class="danger-container">
+        <div class="warning-symbols">⚠️ ☠️ ⚠️</div>
+        <div class="hacker-icon">💀</div>
+        <h1>SECURITY BREACH!</h1>
+        <div class="warning-text">YOUR DETAILS HAVE BEEN COMPROMISED!</div>
+        <p>YOU ARE NOW TRAPPED IN OUR SYSTEM!</p>
+        <p>All your personal data is being extracted...</p>
+        <p>Your credentials have been stolen.</p>
+        <p>Your device is now under our control.</p>
+        
+        <div class="progress-bar">
+            <div class="progress-bar-fill"></div>
+        </div>
+        
+        <div class="counter" id="counter">Data extraction: 0%</div>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()_+{}[]|;:,.<>?/~`';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+        
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(draw, 33);
+        
+        // Resize canvas when window is resized
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // Counter animation
+        let percentage = 0;
+        const counterElement = document.getElementById('counter');
+        
+        function updateCounter() {
+            if (percentage < 100) {
+                percentage++;
+                counterElement.textContent = `Data extraction: ${percentage}%`;
+                setTimeout(updateCounter, 300);
+            } else {
+                counterElement.textContent = 'Data extraction complete!';
+                counterElement.style.backgroundColor = '#00ff00';
+                counterElement.style.color = '#000';
+            }
+        }
+        
+        // Start counter after a short delay
+        setTimeout(updateCounter, 1000);
+        
+        // Simulate typing effect for messages
+        document.querySelectorAll('.danger-container p').forEach((element, index) => {
+            const originalText = element.textContent;
+            element.textContent = '';
+            
+            setTimeout(() => {
+                let charIndex = 0;
+                
+                function typeChar() {
+                    if (charIndex < originalText.length) {
+                        element.textContent += originalText.charAt(charIndex);
+                        charIndex++;
+                        setTimeout(typeChar, Math.random() * 50 + 30);
+                    }
+                }
+                
+                typeChar();
+            }, index * 1000 + 500);
+        });
+    </script>
+</body>
+</html>

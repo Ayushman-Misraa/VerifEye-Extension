@@ -1,0 +1,625 @@
+/* Theme CSS for Web Risk Scanner
+ * Provides dark and light mode styling with smooth transitions
+ * Enhanced for sharper, more modern appearance
+ */
+
+:root {
+  /* Light Theme Variables (Default) - Enhanced for modern appearance */
+  --bg-primary: #f8fafd;
+  --bg-primary-rgb: 248, 250, 253;
+  --bg-secondary: #ffffff;
+  --bg-secondary-rgb: 255, 255, 255;
+  --bg-tertiary: #f2f6fa;
+  --bg-tertiary-rgb: 242, 246, 250;
+  --text-primary: #2c3e50;
+  --text-secondary: #546e7a;
+  --text-muted: #78909c;
+  --border-color: #e1e7ed;
+
+  /* Modern accent colors with vibrant gradients */
+  --accent-color: #4361ee;
+  --accent-color-rgb: 67, 97, 238;
+  --accent-hover: #3a56d4;
+  --accent-hover-rgb: 58, 86, 212;
+  --accent-active: #2a3eb1;
+  --secondary-accent: #38b2ac;
+  --secondary-accent-rgb: 56, 178, 172;
+  --secondary-hover: #319795;
+
+  /* Enhanced shadows for depth */
+  --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 5px 10px -5px rgba(0, 0, 0, 0.05);
+  --header-bg: linear-gradient(135deg, #4361ee 0%, #3a56d4 100%);
+  --header-text: #ffffff;
+
+  /* Glass effect variables */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  --glass-blur: 10px;
+
+  /* Risk Level Colors - Enhanced for better contrast */
+  --risk-low-bg: #43a047;
+  --risk-low-bg-rgb: 67, 160, 71;
+  --risk-low-text: white;
+  --risk-medium-bg: #ffb300;
+  --risk-medium-bg-rgb: 255, 179, 0;
+  --risk-medium-text: #212121;
+  --risk-high-bg: #f4511e;
+  --risk-high-bg-rgb: 244, 81, 30;
+  --risk-high-text: white;
+  --risk-critical-bg: #d32f2f;
+  --risk-critical-bg-rgb: 211, 47, 47;
+  --risk-critical-text: white;
+
+  /* Alert Colors - Enhanced for better visibility */
+  --alert-malicious-bg: #ffebee;
+  --alert-malicious-border: #e53935;
+  --alert-suspicious-bg: #fff8e1;
+  --alert-suspicious-border: #ffb300;
+  --alert-disinformation-bg: #e8f5e9;
+  --alert-disinformation-border: #43a047;
+  --alert-privacy-bg: #e3f2fd;
+  --alert-privacy-border: #1e88e5;
+
+  /* Progress Bar */
+  --progress-bg: #e0e0e0;
+  --progress-fill: #1e88e5;
+
+  /* Animation Speed */
+  --transition-speed: 0.3s;
+
+  /* Font Settings for Sharper Text */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 600;
+
+  /* Border Radius */
+  --border-radius-sm: 6px;
+  --border-radius-md: 10px;
+  --border-radius-lg: 16px;
+}
+
+/* Dark Theme Variables - Enhanced for a more premium, modern look */
+[data-theme="dark"] {
+  --bg-primary: #0f172a;
+  --bg-primary-rgb: 15, 23, 42;
+  --bg-secondary: #1e293b;
+  --bg-secondary-rgb: 30, 41, 59;
+  --bg-tertiary: #334155;
+  --bg-tertiary-rgb: 51, 65, 85;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: #475569;
+
+  /* Modern accent colors for dark theme */
+  --accent-color: #818cf8;
+  --accent-color-rgb: 129, 140, 248;
+  --accent-hover: #6366f1;
+  --accent-hover-rgb: 99, 102, 241;
+  --accent-active: #4f46e5;
+  --secondary-accent: #4ade80;
+  --secondary-accent-rgb: 74, 222, 128;
+  --secondary-hover: #22c55e;
+
+  /* Enhanced shadows for depth in dark mode */
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --header-bg: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+  --header-text: #f1f5f9;
+
+  /* Glass effect variables for dark theme */
+  --glass-bg: rgba(30, 41, 59, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --glass-blur: 10px;
+
+  /* Risk Level Colors - Enhanced for dark mode */
+  --risk-low-bg: #2e7d32;
+  --risk-low-bg-rgb: 46, 125, 50;
+  --risk-low-text: white;
+  --risk-medium-bg: #f9a825;
+  --risk-medium-bg-rgb: 249, 168, 37;
+  --risk-medium-text: #212121;
+  --risk-high-bg: #d84315;
+  --risk-high-bg-rgb: 216, 67, 21;
+  --risk-high-text: white;
+  --risk-critical-bg: #c62828;
+  --risk-critical-bg-rgb: 198, 40, 40;
+  --risk-critical-text: white;
+
+  /* Alert Colors - Enhanced for dark mode */
+  --alert-malicious-bg: rgba(244, 67, 54, 0.2);
+  --alert-malicious-border: #e53935;
+  --alert-suspicious-bg: rgba(255, 193, 7, 0.2);
+  --alert-suspicious-border: #ffb300;
+  --alert-disinformation-bg: rgba(76, 175, 80, 0.2);
+  --alert-disinformation-border: #43a047;
+  --alert-privacy-bg: rgba(33, 150, 243, 0.2);
+  --alert-privacy-border: #42a5f5;
+
+  /* Progress Bar */
+  --progress-bg: #37474f;
+  --progress-fill: #42a5f5;
+}
+
+/* Smooth transition for theme switching */
+body, .container, button, .risk-level, .current-risk, .alerts-section, 
+.scan-info, .alert-item, .settings-panel, input, select, a, h1, h2, h3, 
+.dashboard-header, .dashboard-sidebar, .dashboard-main, .summary-card, 
+.filters-card, .chart-card, .sites-table-container, .sites-table, 
+.modal-container, .export-modal, .export-option {
+  transition: background-color var(--transition-speed) ease,
+              color var(--transition-speed) ease,
+              border-color var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease;
+}
+
+/* Enhanced Futuristic UI Elements */
+
+/* Glowing accents for interactive elements with improved visual effect */
+button:hover, .export-option:hover, .theme-toggle:hover {
+  box-shadow: 0 0 20px rgba(var(--accent-color-rgb, 30, 136, 229), 0.5);
+  transform: translateY(-3px);
+}
+
+/* Pulsing animation for active states with smoother transitions */
+@keyframes pulse-glow {
+  0% { box-shadow: 0 0 5px rgba(var(--accent-color-rgb, 30, 136, 229), 0.5); }
+  50% { box-shadow: 0 0 20px rgba(var(--accent-color-rgb, 30, 136, 229), 0.7); }
+  100% { box-shadow: 0 0 5px rgba(var(--accent-color-rgb, 30, 136, 229), 0.5); }
+}
+
+/* Subtle background pulse animation */
+@keyframes bg-pulse {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.risk-level.active {
+  animation: pulse-glow 2s infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.risk-level.active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+  z-index: 1;
+  animation: bg-pulse 2s infinite;
+  background-size: 200% 200%;
+}
+
+/* Futuristic toggle switch */
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 30px;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--bg-tertiary);
+  transition: .4s;
+  border-radius: 34px;
+  border: 1px solid var(--border-color);
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 4px;
+  bottom: 3px;
+  background-color: var(--accent-color);
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+  background-color: var(--bg-tertiary);
+}
+
+input:checked + .toggle-slider:before {
+  transform: translateX(29px);
+  background-color: var(--secondary-accent);
+}
+
+.toggle-slider .toggle-icon {
+  position: absolute;
+  font-size: 16px;
+  transition: .4s;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.toggle-slider .sun-icon {
+  left: 8px;
+  color: #FFC107;
+  opacity: 1;
+}
+
+.toggle-slider .moon-icon {
+  right: 8px;
+  color: #9FA8DA;
+  opacity: 0.4;
+}
+
+input:checked + .toggle-slider .sun-icon {
+  opacity: 0.4;
+}
+
+input:checked + .toggle-slider .moon-icon {
+  opacity: 1;
+}
+
+/* Enhanced modern card design with glass morphism */
+.modern-card {
+  background-color: var(--glass-bg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--card-shadow);
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.modern-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.modern-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-color), var(--secondary-accent));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modern-card:hover::after {
+  opacity: 1;
+}
+
+.modern-card-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(var(--bg-secondary-rgb), 0.5);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  position: relative;
+  z-index: 1;
+}
+
+.modern-card-header h2 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.25rem;
+  background: linear-gradient(90deg, var(--accent-color), var(--secondary-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0px 0px 1px rgba(var(--text-primary-rgb), 0.1);
+}
+
+.modern-card-body {
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Enhanced futuristic buttons with modern neo-morphic design */
+.futuristic-button {
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: 14px 28px;
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(var(--accent-color-rgb), 0.3),
+              inset 0 -3px 0 rgba(0, 0, 0, 0.15),
+              0 0 0 0 rgba(var(--accent-color-rgb), 0.5);
+  transform: translateZ(0);
+  -webkit-font-smoothing: antialiased;
+}
+
+.futuristic-button:hover {
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-color) 100%);
+  transform: translateY(-3px) translateZ(0);
+  box-shadow: 0 8px 25px rgba(var(--accent-color-rgb), 0.4),
+              inset 0 -3px 0 rgba(0, 0, 0, 0.15),
+              0 0 20px 5px rgba(var(--accent-color-rgb), 0.2);
+  animation: pulse 1.5s infinite;
+}
+
+.futuristic-button:active {
+  transform: translateY(-1px) translateZ(0);
+  box-shadow: 0 4px 8px rgba(var(--accent-color-rgb), 0.3),
+              inset 0 -1px 0 rgba(0, 0, 0, 0.15);
+  animation: none;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 8px 25px rgba(var(--accent-color-rgb), 0.4),
+                inset 0 -3px 0 rgba(0, 0, 0, 0.15),
+                0 0 0 0 rgba(var(--accent-color-rgb), 0.5);
+  }
+  70% {
+    box-shadow: 0 8px 25px rgba(var(--accent-color-rgb), 0.4),
+                inset 0 -3px 0 rgba(0, 0, 0, 0.15),
+                0 0 20px 10px rgba(var(--accent-color-rgb), 0);
+  }
+  100% {
+    box-shadow: 0 8px 25px rgba(var(--accent-color-rgb), 0.4),
+                inset 0 -3px 0 rgba(0, 0, 0, 0.15),
+                0 0 0 0 rgba(var(--accent-color-rgb), 0);
+  }
+}
+
+.futuristic-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+  z-index: 1;
+}
+
+.futuristic-button:hover::before {
+  transform: translateX(100%);
+}
+
+.futuristic-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.futuristic-button:hover::after {
+  opacity: 1;
+}
+
+/* Secondary button style */
+.secondary-button {
+  background: transparent;
+  color: var(--accent-color);
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 4px 15px rgba(var(--accent-color-rgb), 0.15),
+              0 0 0 0 rgba(var(--accent-color-rgb), 0.2);
+}
+
+.secondary-button:hover {
+  background: rgba(var(--accent-color-rgb), 0.1);
+  color: var(--accent-hover);
+  border-color: var(--accent-hover);
+  box-shadow: 0 8px 25px rgba(var(--accent-color-rgb), 0.2),
+              0 0 0 0 rgba(var(--accent-color-rgb), 0.2);
+}
+
+/* Animated progress bar */
+.animated-progress-bar {
+  height: 8px;
+  background-color: var(--progress-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.animated-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 30%;
+  background-color: var(--progress-fill);
+  border-radius: 4px;
+  animation: progress-animation 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-animation {
+  0% { left: -30%; }
+  100% { left: 100%; }
+}
+
+/* Anonymized data indicator */
+.anonymized-data-badge {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.anonymized-data-badge::before {
+  content: '🔒';
+  margin-right: 5px;
+}
+
+/* Tooltip for privacy information */
+.privacy-tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: help;
+}
+
+.privacy-tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  text-align: center;
+  border-radius: 6px;
+  padding: 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -100px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  box-shadow: var(--card-shadow);
+  border: 1px solid var(--border-color);
+}
+
+.privacy-tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Enhanced futuristic scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--accent-color), var(--accent-hover));
+  border-radius: 5px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: all 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--accent-hover), var(--accent-active));
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--bg-tertiary);
+}
+
+/* Blurred backdrop for modals */
+.blur-backdrop {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --bg-primary: #000000;
+  --bg-secondary: #121212;
+  --bg-tertiary: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #eeeeee;
+  --text-muted: #cccccc;
+  --border-color: #444444;
+  --accent-color: #ffcc00;
+  --accent-color-rgb: 255, 204, 0;
+  --accent-hover: #ffdd33;
+  --accent-hover-rgb: 255, 221, 51;
+  --accent-active: #ffee66;
+  --secondary-accent: #00ccff;
+  --secondary-accent-rgb: 0, 204, 255;
+  --secondary-hover: #33ddff;
+
+  /* Risk Level Colors - High contrast */
+  --risk-low-bg: #00cc00;
+  --risk-low-bg-rgb: 0, 204, 0;
+  --risk-low-text: #000000;
+  --risk-medium-bg: #ffcc00;
+  --risk-medium-bg-rgb: 255, 204, 0;
+  --risk-medium-text: #000000;
+  --risk-high-bg: #ff6600;
+  --risk-high-bg-rgb: 255, 102, 0;
+  --risk-high-text: #000000;
+  --risk-critical-bg: #ff0000;
+  --risk-critical-bg-rgb: 255, 0, 0;
+  --risk-critical-text: #000000;
+}
+
+/* Reduced Motion */
+.reduced-motion * {
+  transition-duration: 0.001ms !important;
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+}
+
+/* Font size multiplier for accessibility */
+:root {
+  --font-size-multiplier: 1;
+}
+
+/* Modern scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--accent-color), var(--accent-hover));
+  border-radius: 8px;
+  border: 3px solid var(--bg-tertiary);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--accent-hover), var(--accent-active));
+  border: 2px solid var(--bg-tertiary);
+}
+
+/* Modern focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--accent-color);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(var(--accent-color-rgb), 0.3);
+}

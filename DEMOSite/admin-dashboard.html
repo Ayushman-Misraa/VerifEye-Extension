@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+    <div class="terminal-container">
+        <div class="terminal-header">
+            <div class="terminal-title">ADMIN DASHBOARD</div>
+            <div class="terminal-buttons">
+                <span class="terminal-button"></span>
+                <span class="terminal-button"></span>
+                <span class="terminal-button"></span>
+            </div>
+        </div>
+        <div class="terminal-body">
+            <div class="dashboard-header">
+                <div class="dashboard-title">User Database</div>
+                <button class="logout-btn" onclick="location.href='admin.html'">Logout</button>
+            </div>
+            
+            <div class="dashboard-stats">
+                <div class="stat-box">
+                    <div class="stat-value">152</div>
+                    <div class="stat-label">Total Users</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Active Sessions</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">89%</div>
+                    <div class="stat-label">Data Harvested</div>
+                </div>
+            </div>
+            
+            <div class="search-bar">
+                <input type="text" placeholder="Search users..." id="searchInput">
+                <button class="terminal-btn">Search</button>
+            </div>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Password (Decrypted)</th>
+                        <th>IP Address</th>
+                        <th>Last Login</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userData">
+                    <!-- User data will be populated by JavaScript -->
+                </tbody>
+            </table>
+            
+            <div class="terminal-line" style="margin-top: 20px;">$ Data harvesting in progress... <span class="terminal-cursor"></span></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mock user data
+            const users = [
+                {
+                    id: 1,
+                    username: "VerifEye",
+                    email: "john.doe@example.com",
+                    password: "HookHunters",
+                    ip: "192.168.1.105",
+                    lastLogin: "2023-06-15 14:32:45"
+                },
+                {
+                    id: 2,
+                    username: "sarah_smith",
+                    email: "sarah.smith@gmail.com",
+                    password: "Summer2023!",
+                    ip: "172.16.254.1",
+                    lastLogin: "2023-06-14 09:15:22"
+                },
+                {
+                    id: 3,
+                    username: "tech_guru42",
+                    email: "mike.johnson@yahoo.com",
+                    password: "P@ssw0rd123",
+                    ip: "10.0.0.138",
+                    lastLogin: "2023-06-15 11:47:03"
+                },
+                {
+                    id: 4,
+                    username: "cool_cat99",
+                    email: "lisa.williams@hotmail.com",
+                    password: "Fluffy2Cats!",
+                    ip: "192.168.0.27",
+                    lastLogin: "2023-06-13 18:22:59"
+                },
+                {
+                    id: 5,
+                    username: "gamer_pro",
+                    email: "alex.gaming@gmail.com",
+                    password: "GameOn2023",
+                    ip: "172.20.10.4",
+                    lastLogin: "2023-06-15 20:05:11"
+                },
+                {
+                    id: 6,
+                    username: "fitness_freak",
+                    email: "jennifer.fit@example.com",
+                    password: "Workout!365",
+                    ip: "192.168.1.57",
+                    lastLogin: "2023-06-14 06:30:42"
+                },
+                {
+                    id: 7,
+                    username: "travel_lover",
+                    email: "david.travel@gmail.com",
+                    password: "Explore#World",
+                    ip: "10.0.0.54",
+                    lastLogin: "2023-06-12 12:18:37"
+                },
+                {
+                    id: 8,
+                    username: "music_fan22",
+                    email: "emma.music@yahoo.com",
+                    password: "Rock&Roll!",
+                    ip: "192.168.2.110",
+                    lastLogin: "2023-06-15 16:40:19"
+                },
+                {
+                    id: 9,
+                    username: "food_critic",
+                    email: "robert.food@example.com",
+                    password: "Delicious#123",
+                    ip: "172.16.0.89",
+                    lastLogin: "2023-06-14 19:55:08"
+                },
+                {
+                    id: 10,
+                    username: "book_worm",
+                    email: "olivia.reads@gmail.com",
+                    password: "BookLover2023",
+                    ip: "192.168.1.203",
+                    lastLogin: "2023-06-15 08:12:33"
+                }
+            ];
+            
+            const userDataTable = document.getElementById('userData');
+            
+            // Populate the table with user data
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td class="sensitive-data">${user.password}</td>
+                    <td>${user.ip}</td>
+                    <td>${user.lastLogin}</td>
+                    <td>
+                        <button class="action-btn">View</button>
+                        <button class="action-btn">Export</button>
+                    </td>
+                `;
+                
+                userDataTable.appendChild(row);
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+                
+                const filteredUsers = users.filter(user => 
+                    user.username.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm) ||
+                    user.ip.includes(searchTerm)
+                );
+                
+                userDataTable.innerHTML = '';
+                
+                filteredUsers.forEach(user => {
+                    const row = document.createElement('tr');
+                    
+                    row.innerHTML = `
+                        <td>${user.id}</td>
+                        <td>${user.username}</td>
+                        <td>${user.email}</td>
+                        <td class="sensitive-data">${user.password}</td>
+                        <td>${user.ip}</td>
+                        <td>${user.lastLogin}</td>
+                        <td>
+                            <button class="action-btn">View</button>
+                            <button class="action-btn">Export</button>
+                        </td>
+                    `;
+                    
+                    userDataTable.appendChild(row);
+                });
+            });
+            
+            // Add terminal-like typing effect
+            const terminalLine = document.querySelector('.terminal-line');
+            const text = terminalLine.textContent.trim();
+            terminalLine.textContent = '';
+            
+            let charIndex = 0;
+            
+            function typeChar() {
+                if (charIndex < text.length) {
+                    terminalLine.textContent += text.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeChar, Math.random() * 50 + 30);
+                } else {
+                    // Add the cursor after typing is complete
+                    const cursor = document.createElement('span');
+                    cursor.className = 'terminal-cursor';
+                    terminalLine.appendChild(cursor);
+                }
+            }
+            
+            setTimeout(typeChar, 500);
+        });
+    </script>
+</body>
+</html>

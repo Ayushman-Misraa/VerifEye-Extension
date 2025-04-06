@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VerifEye Dashboard</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="animations.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="digital-noise">
+  <div class="dashboard-container grid-bg">
+    <header class="dashboard-header gradient-bg">
+      <div class="logo-container">
+        <img src="icons/icon48.png" alt="VerifEye Logo" class="logo">
+        <h1>VerifEye Dashboard</h1>
+      </div>
+      <div class="header-actions">
+        <label class="theme-toggle" title="Toggle dark/light mode">
+          <input type="checkbox" id="theme-toggle-input">
+          <span class="toggle-slider">
+            <span class="toggle-icon sun-icon">&#x2600;</span>
+            <span class="toggle-icon moon-icon">&#x1F319;</span>
+          </span>
+        </label>
+        <button id="refresh-data" class="action-button futuristic-button gradient-button">
+          Refresh Data
+        </button>
+        <button id="export-data" class="action-button futuristic-button">
+          Export Report
+        </button>
+        <button id="clear-history" class="action-button futuristic-button warning-button">
+          Clear History
+        </button>
+      </div>
+    </header>
+
+    <div class="dashboard-content">
+      <div class="dashboard-sidebar">
+        <div class="summary-card modern-card dashboard-card">
+          <div class="modern-card-header">
+            <h2>Risk Summary</h2>
+            <div class="anonymized-data-badge privacy-tooltip">
+              Anonymized Data
+              <span class="tooltip-text">All scan data is anonymized to protect your privacy while enabling collective risk analysis.</span>
+            </div>
+          </div>
+          <div class="modern-card-body">
+            <div class="summary-stats">
+              <div class="stat-item">
+                <span class="stat-value" id="total-scans">0</span>
+                <span class="stat-label">Total Scans</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value" id="high-risk-sites">0</span>
+                <span class="stat-label">High Risk Sites</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-value" id="avg-risk-score">0</span>
+                <span class="stat-label">Avg. Risk Score</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="filters-card modern-card dashboard-card">
+          <div class="modern-card-header">
+            <h2>Filters</h2>
+          </div>
+          <div class="modern-card-body">
+            <div class="filter-group">
+              <label for="risk-filter">Risk Level:</label>
+              <select id="risk-filter">
+                <option value="all">All Levels</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+                <option value="critical">Critical</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="date-filter">Time Period:</label>
+              <select id="date-filter">
+                <option value="all">All Time</option>
+                <option value="today">Today</option>
+                <option value="week">This Week</option>
+                <option value="month">This Month</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="domain-filter">Domain:</label>
+              <input type="text" id="domain-filter" placeholder="Filter by domain...">
+            </div>
+            <button id="apply-filters" class="filter-button futuristic-button gradient-button">
+              Apply Filters
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dashboard-main">
+        <div class="chart-container">
+          <div class="chart-card modern-card dashboard-card">
+            <div class="modern-card-header">
+              <h2>Risk Distribution</h2>
+            </div>
+            <div class="modern-card-body">
+              <div class="chart" id="risk-distribution-chart">
+                <div class="placeholder-chart">
+                  <div class="chart-bar" style="height: 20%; background-color: var(--risk-low-bg);">
+                    <span class="bar-label">Low</span>
+                  </div>
+                  <div class="chart-bar" style="height: 40%; background-color: var(--risk-medium-bg);">
+                    <span class="bar-label">Medium</span>
+                  </div>
+                  <div class="chart-bar" style="height: 30%; background-color: var(--risk-high-bg);">
+                    <span class="bar-label">High</span>
+                  </div>
+                  <div class="chart-bar" style="height: 10%; background-color: var(--risk-critical-bg);">
+                    <span class="bar-label">Critical</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chart-card modern-card dashboard-card">
+            <div class="modern-card-header">
+              <h2>Common Web Risks</h2>
+            </div>
+            <div class="modern-card-body">
+              <div class="chart" id="common-threats-chart">
+                <div class="placeholder-chart horizontal">
+                  <div class="chart-row">
+                    <span class="row-label">Tracking</span>
+                    <div class="chart-bar-h" style="width: 65%; background-color: var(--alert-privacy-border);"></div>
+                    <span class="row-value">65%</span>
+                  </div>
+                  <div class="chart-row">
+                    <span class="row-label">Suspicious</span>
+                    <div class="chart-bar-h" style="width: 42%; background-color: var(--alert-suspicious-border);"></div>
+                    <span class="row-value">42%</span>
+                  </div>
+                  <div class="chart-row">
+                    <span class="row-label">Malware</span>
+                    <div class="chart-bar-h" style="width: 28%; background-color: var(--alert-malicious-border);"></div>
+                    <span class="row-value">28%</span>
+                  </div>
+                  <div class="chart-row">
+                    <span class="row-label">Misinfo</span>
+                    <div class="chart-bar-h" style="width: 15%; background-color: var(--alert-disinformation-border);"></div>
+                    <span class="row-value">15%</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sites-table-container modern-card dashboard-card">
+          <div class="modern-card-header">
+            <h2>Scanned Sites</h2>
+            <div class="privacy-tooltip">
+              <span style="font-size: 16px; vertical-align: middle;">*</span>
+              <span class="tooltip-text">All site data is anonymized for privacy while enabling collective threat analysis.</span>
+            </div>
+          </div>
+          <div class="modern-card-body">
+            <table class="sites-table">
+              <thead>
+                <tr>
+                  <th>Domain</th>
+                  <th>Risk Level</th>
+                  <th>Score</th>
+                  <th>Alerts</th>
+                  <th>Scan Time</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="sites-table-body">
+                <tr class="no-data-row">
+                  <td colspan="6">No scan data available. Start scanning websites to populate this dashboard.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="animations.js"></script>
+  <script src="report-generator.js"></script>
+  <script src="dashboard.js"></script>
+
+  <!-- Hidden links to ensure pages are accessible -->
+  <div style="display: none;">
+    <a href="details.html" id="details-page-link">Details Page</a>
+    <a href="view-details.html" id="view-details-page-link">View Details Page</a>
+  </div>
+
+  <!-- Confirmation Modal for Clear History -->
+  <div id="clear-history-modal" class="modal-container" style="display: none;">
+    <div class="export-modal">
+      <h2>Clear Scan History</h2>
+      <p>Are you sure you want to clear all scan history? This action cannot be undone.</p>
+
+      <div class="modal-actions">
+        <button id="cancel-clear" class="cancel-button">Cancel</button>
+        <button id="confirm-clear" class="action-button warning-button">
+          Clear History
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+</html>

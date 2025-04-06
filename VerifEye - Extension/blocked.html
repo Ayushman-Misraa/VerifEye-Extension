@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Site Blocked</title>
+  <link rel="stylesheet" href="theme.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .blocked-container {
+      max-width: 600px;
+      padding: 30px;
+      background-color: var(--bg-secondary);
+      border-radius: 12px;
+      box-shadow: var(--card-shadow);
+      text-align: center;
+    }
+
+    .blocked-icon {
+      font-size: 80px;
+      color: var(--risk-critical-bg);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    p {
+      color: var(--text-secondary);
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .domain-name {
+      font-weight: bold;
+      color: var(--risk-critical-bg);
+    }
+
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .action-button {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .primary-button {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+    }
+
+    .primary-button:hover {
+      background-color: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .secondary-button {
+      background-color: transparent;
+      color: var(--text-secondary);
+      border: 1px solid var(--border-color);
+    }
+
+    .secondary-button:hover {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .material-icons {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="blocked-container">
+    <span class="material-icons blocked-icon">block</span>
+    <h1>Site Blocked</h1>
+    <p>The website <span id="blocked-domain" class="domain-name">domain.com</span> has been blocked by Web Risk Scanner for your protection.</p>
+    <p>This domain was manually added to your blocklist. If you believe this is a mistake, you can unblock it in the extension settings.</p>
+    
+    <div class="action-buttons">
+      <button id="go-back-button" class="action-button secondary-button">
+        <span class="material-icons">arrow_back</span>
+        Go Back
+      </button>
+      <button id="unblock-button" class="action-button primary-button">
+        <span class="material-icons">lock_open</span>
+        Unblock Site
+      </button>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get the blocked domain from the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const domain = urlParams.get('domain');
+
+      // Display the blocked domain
+      const blockedDomainElement = document.getElementById('blocked-domain');
+      if (domain) {
+        blockedDomainElement.textContent = domain;
+      }
+
+      // Set up the Go Back button
+      document.getElementById('go-back-button').addEventListener('click', function() {
+        history.back();
+      });
+
+      // Set up the Unblock button
+      document.getElementById('unblock-button').addEventListener('click', function() {
+        if (domain) {
+          // Send message to background script to unblock the domain
+          chrome.runtime.sendMessage({
+            action: 'unblockDomain',
+            domain: domain
+          }, function(response) {
+            if (response && response.status === 'success') {
+              alert(`Domain "${domain}" has been unblocked.`);
+              // Redirect to the unblocked domain with proper protocol
+              window.location.href = 'https://' + domain;
+            } else {
+              alert('Failed to unblock domain. Please try again.');
+            }
+          });
+        }
+      });
+
+      // Apply theme from chrome storage
+      chrome.storage.local.get('settings', function(data) {
+        if (data.settings && data.settings.darkMode) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

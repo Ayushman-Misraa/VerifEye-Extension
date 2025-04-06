@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VerifEye - Detailed Report</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="details.css">
+  <link rel="stylesheet" href="animations.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="digital-noise">
+  <div class="dashboard-container grid-bg">
+    <header class="dashboard-header gradient-bg">
+      <div class="logo-container">
+        <img src="icons/icon48.png" alt="VerifEye Logo" class="logo">
+        <h1>Detailed Security Report</h1>
+      </div>
+      <div class="header-actions">
+        <button id="back-to-dashboard" class="action-button futuristic-button gradient-button">
+          <span class="material-icons" style="font-size: 16px; margin-right: 5px;">arrow_back</span>
+          Back to Dashboard
+        </button>
+        <label class="theme-toggle" title="Toggle dark/light mode">
+          <input type="checkbox" id="theme-toggle-input">
+          <span class="toggle-slider">
+            <span class="toggle-icon sun-icon">&#x2600;</span>
+            <span class="toggle-icon moon-icon">&#x1F319;</span>
+          </span>
+        </label>
+      </div>
+    </header>
+
+    <div class="details-content">
+      <div class="site-info-card modern-card animate-on-load slide-in-up">
+        <div class="modern-card-header">
+          <h2>Site Information</h2>
+        </div>
+        <div class="modern-card-body">
+          <div class="site-info-grid">
+            <div class="info-item">
+              <span class="info-label">URL:</span>
+              <span id="site-url" class="info-value"></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Scan Time:</span>
+              <span id="scan-time" class="info-value"></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Domain:</span>
+              <span id="site-domain" class="info-value"></span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Risk Score:</span>
+              <span id="risk-score" class="info-value"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="risk-summary-card modern-card animate-on-load slide-in-up">
+        <div class="modern-card-header">
+          <h2>Risk Assessment</h2>
+        </div>
+        <div class="modern-card-body">
+          <div class="risk-level-display">
+            <div id="risk-level-indicator" class="risk-level-large">
+              <span id="risk-level-text">Medium</span>
+            </div>
+            <div class="risk-score-visual">
+              <div class="score-bar-container">
+                <div id="score-bar" class="score-bar"></div>
+              </div>
+              <div class="score-labels">
+                <span>0</span>
+                <span>25</span>
+                <span>50</span>
+                <span>75</span>
+                <span>100</span>
+              </div>
+            </div>
+          </div>
+          <div class="risk-explanation">
+            <h3>What This Means</h3>
+            <p id="risk-explanation-text">This site has some security concerns that should be addressed.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="alerts-card modern-card animate-on-load slide-in-up">
+        <div class="modern-card-header">
+          <h2>Security Alerts</h2>
+        </div>
+        <div class="modern-card-body">
+          <div id="alerts-container" class="detailed-alerts">
+            <!-- Alerts will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="recommendations-card modern-card animate-on-load slide-in-up">
+        <div class="modern-card-header">
+          <h2>Recommendations</h2>
+        </div>
+        <div class="modern-card-body">
+          <div id="recommendations-container" class="recommendations-list">
+            <!-- Recommendations will be populated here -->
+          </div>
+        </div>
+      </div>
+
+      <div class="technical-details-card modern-card animate-on-load slide-in-up">
+        <div class="modern-card-header">
+          <h2>Technical Details</h2>
+          <button id="toggle-technical" class="toggle-button">
+            <span class="material-icons">expand_more</span>
+          </button>
+        </div>
+        <div class="modern-card-body" id="technical-details-body" style="display: none;">
+          <div id="technical-details-container" class="technical-details">
+            <!-- Technical details will be populated here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="animations.js"></script>
+  <script src="details.js"></script>
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VerifEye</title>
+  <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="popup.css">
+  <link rel="stylesheet" href="animations.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="digital-noise">
+  <div class="container grid-bg">
+    <div class="header-container">
+      <h1>VerifEye</h1>
+      <label class="theme-toggle" title="Toggle dark/light mode">
+        <input type="checkbox" id="theme-toggle-input">
+        <span class="toggle-slider">
+          <span class="toggle-icon sun-icon">&#x2600;</span>
+          <span class="toggle-icon moon-icon">&#x1F319;</span>
+        </span>
+      </label>
+    </div>
+
+    <div class="risk-indicator modern-card animate-on-load slide-in-up">
+      <div class="modern-card-header">
+        <h2>Risk Level</h2>
+        <div class="card-actions">
+          <span class="material-icons info-icon privacy-tooltip">info
+            <span class="tooltip-text">Risk level is calculated based on multiple security factors including domain reputation, code analysis, and content patterns.</span>
+          </span>
+        </div>
+      </div>
+      <div class="modern-card-body">
+        <div class="risk-levels">
+          <div class="risk-level" id="low">Low</div>
+          <div class="risk-level" id="medium">Medium</div>
+          <div class="risk-level" id="high">High</div>
+          <div class="risk-level" id="critical">Critical</div>
+        </div>
+        <div class="current-risk" id="current-risk">Not Scanned</div>
+        <div class="risk-score-display" id="risk-score-display"></div>
+      </div>
+    </div>
+
+    <div class="alerts-section modern-card animate-on-load slide-in-up">
+      <div class="modern-card-header">
+        <h2>Alerts</h2>
+        <div class="card-actions">
+          <button id="export-alerts" class="icon-button" title="Export alerts to CSV">
+            <span class="material-icons">file_download</span>
+          </button>
+          <button id="filter-alerts" class="icon-button" title="Filter alerts">
+            <span class="material-icons">filter_list</span>
+          </button>
+        </div>
+      </div>
+      <div class="filter-panel" id="filter-panel" style="display: none;">
+        <div class="filter-options">
+          <label><input type="checkbox" class="filter-checkbox" data-type="malicious" checked> Malicious</label>
+          <label><input type="checkbox" class="filter-checkbox" data-type="suspicious" checked> Suspicious</label>
+          <label><input type="checkbox" class="filter-checkbox" data-type="disinformation" checked> Disinformation</label>
+          <label><input type="checkbox" class="filter-checkbox" data-type="privacy" checked> Privacy</label>
+        </div>
+      </div>
+      <div class="modern-card-body">
+        <div class="alerts" id="alerts">
+          <p class="no-alerts">No alerts to display. Click "Scan Page" to analyze the current webpage.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="scan-info modern-card animate-on-load slide-in-up">
+      <div class="modern-card-header">
+        <h2>Scan Information</h2>
+      </div>
+      <div class="modern-card-body">
+        <div id="scan-details">
+          <p>URL: <span id="page-url">Not scanned</span></p>
+          <p>Last Scan: <span id="scan-time">Never</span></p>
+          <p>Scan Duration: <span id="scan-duration">N/A</span></p>
+        </div>
+        <div class="anonymized-data-badge privacy-tooltip">
+          Anonymized Data
+          <span class="tooltip-text">All scan data is anonymized to protect your privacy while enabling collective risk analysis.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="action-buttons animate-on-load">
+      <button id="scan-button" class="futuristic-button gradient-button">Scanning...</button>
+      <button id="deep-scan-button" class="futuristic-button secondary-button">
+        <span class="material-icons" style="font-size: 16px; margin-right: 5px;">security</span>
+        Deep Scan
+      </button>
+    </div>
+
+    <div class="button-container">
+      <button id="dashboard-button" class="futuristic-button secondary-button">
+        <span class="material-icons" style="font-size: 16px; margin-right: 5px;">dashboard</span>
+        View Dashboard
+      </button>
+    </div>
+
+    <div class="settings-toggle">
+      <a href="#" id="settings-link">
+        <span class="material-icons" style="font-size: 16px; vertical-align: middle; margin-right: 3px;">settings</span>
+        Settings
+      </a>
+
+      <div class="accessibility-controls">
+        <button class="accessibility-button font-size-increase" id="font-size-increase" title="Increase font size"></button>
+        <button class="accessibility-button font-size-decrease" id="font-size-decrease" title="Decrease font size"></button>
+        <button class="accessibility-button high-contrast" id="high-contrast-toggle" title="Toggle high contrast mode"></button>
+      </div>
+    </div>
+
+    <div class="settings-panel modern-card" id="settings-panel" style="display: none;">
+      <div class="modern-card-header">
+        <h2>Scanner Settings</h2>
+      </div>
+      <div class="modern-card-body">
+        <div class="settings-tabs">
+          <button class="tab-button active" data-tab="general-settings">General</button>
+          <button class="tab-button" data-tab="scan-settings">Scan Options</button>
+          <button class="tab-button" data-tab="notification-settings">Notifications</button>
+          <button class="tab-button" data-tab="privacy-settings">Privacy</button>
+          <button class="tab-button" data-tab="accessibility-settings">Accessibility</button>
+        </div>
+
+        <div class="tab-content" id="general-settings">
+          <div class="setting-item">
+            <label for="auto-scan">
+              <input type="checkbox" id="auto-scan" checked>
+              Auto-scan pages when loaded
+            </label>
+          </div>
+          <div class="setting-item">
+            <label for="scan-interval">Scan delay (seconds):</label>
+            <input type="range" id="scan-interval" min="1" max="10" value="5" class="slider">
+            <span id="scan-interval-value">5</span>
+          </div>
+          <div class="setting-item">
+            <label for="cache-duration">Cache results for (minutes):</label>
+            <select id="cache-duration">
+              <option value="5">5 minutes</option>
+              <option value="15">15 minutes</option>
+              <option value="30" selected>30 minutes</option>
+              <option value="60">1 hour</option>
+              <option value="240">4 hours</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tab-content" id="scan-settings" style="display: none;">
+          <div class="setting-item">
+            <label for="deep-scan-timeout">
+              <input type="checkbox" id="enable-deep-scan" checked>
+              Enable deep scanning
+            </label>
+          </div>
+          <div class="setting-item">
+            <label for="deep-scan-timeout">Deep scan timeout (seconds):</label>
+            <select id="deep-scan-timeout">
+              <option value="30">30 seconds</option>
+              <option value="60" selected>60 seconds</option>
+              <option value="120">2 minutes</option>
+              <option value="300">5 minutes</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label for="scan-resources">
+              <input type="checkbox" id="scan-resources" checked>
+              Scan external resources
+            </label>
+          </div>
+        </div>
+
+        <div class="tab-content" id="notification-settings" style="display: none;">
+          <div class="setting-item">
+            <label for="notify-high">
+              <input type="checkbox" id="notify-high" checked>
+              Show notifications for high-risk pages
+            </label>
+          </div>
+          <div class="setting-item">
+            <label for="scan-threshold">Notification threshold:</label>
+            <select id="scan-threshold">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+              <option value="critical">Critical</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label for="notification-sound">
+              <input type="checkbox" id="notification-sound">
+              Play sound with notifications
+            </label>
+          </div>
+        </div>
+
+        <div class="tab-content" id="privacy-settings" style="display: none;">
+          <div class="setting-item">
+            <label for="anonymize-data">
+              <input type="checkbox" id="anonymize-data" checked>
+              Anonymize scan data
+              <span class="material-icons privacy-tooltip" style="font-size: 16px; vertical-align: middle;">
+                info
+                <span class="tooltip-text">When enabled, all personal identifiers are removed before analysis, enhancing privacy while contributing to collective threat detection.</span>
+              </span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <label for="trusted-domains">Trusted Domains:</label>
+            <div class="trusted-domains-container">
+              <textarea id="trusted-domains" rows="3" placeholder="Enter domains separated by commas (e.g., instagram.com, openai.com)"></textarea>
+              <span class="material-icons privacy-tooltip" style="font-size: 16px; vertical-align: middle;">
+                info
+                <span class="tooltip-text">Domains listed here will be considered trusted and receive lower risk scores. Include domains without 'www.' prefix.</span>
+              </span>
+            </div>
+          </div>
+          <div class="setting-item">
+            <button id="clear-history" class="secondary-button">Clear Scan History</button>
+          </div>
+        </div>
+
+        <div class="tab-content" id="accessibility-settings" style="display: none;">
+          <div class="setting-item">
+            <label for="high-contrast-mode">
+              <input type="checkbox" id="high-contrast-mode">
+              High contrast mode
+              <span class="material-icons privacy-tooltip" style="font-size: 16px; vertical-align: middle;">
+                info
+                <span class="tooltip-text">Enhances visual contrast for better readability.</span>
+              </span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <label for="font-size-adjustment">Font Size Adjustment:</label>
+            <div class="font-size-controls">
+              <input type="range" id="font-size-adjustment" min="80" max="150" value="100" class="slider">
+              <span id="font-size-value">100%</span>
+            </div>
+          </div>
+          <div class="setting-item">
+            <label for="reduce-animations">
+              <input type="checkbox" id="reduce-animations">
+              Reduce animations
+              <span class="material-icons privacy-tooltip" style="font-size: 16px; vertical-align: middle;">
+                info
+                <span class="tooltip-text">Minimizes motion effects for users sensitive to animations.</span>
+              </span>
+            </label>
+          </div>
+          <div class="setting-item">
+            <label for="screen-reader-support">
+              <input type="checkbox" id="screen-reader-support" checked>
+              Enhanced screen reader support
+              <span class="material-icons privacy-tooltip" style="font-size: 16px; vertical-align: middle;">
+                info
+                <span class="tooltip-text">Improves compatibility with screen readers and other assistive technologies.</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="setting-item">
+          <button id="save-settings" class="futuristic-button">Save Settings</button>
+          <button id="reset-settings" class="secondary-button">Reset to Defaults</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Quick Actions Panel -->
+    <div class="quick-actions-panel">
+      <button id="block-site-button" class="quick-action-button" title="Add to blocklist">
+        <span class="material-icons">block</span>
+      </button>
+      <button id="report-site-button" class="quick-action-button" title="Report this site">
+        <span class="material-icons">flag</span>
+      </button>
+      <button id="share-report-button" class="quick-action-button" title="Share report">
+        <span class="material-icons">share</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="animations.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
